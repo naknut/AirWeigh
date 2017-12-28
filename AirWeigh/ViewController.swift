@@ -23,6 +23,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         centralManager.delegate = self
     }
     
+    //MARK: - Central manager delegate
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state == .poweredOn {
             centralManager.scanForPeripherals(withServices: [serviceUUID], options: nil)
@@ -40,6 +41,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         peripheral.discoverServices([serviceUUID])
     }
     
+    //MARK: - Peripheral delegate
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let service = peripheral.services?.first(where: { $0.uuid == serviceUUID }) {
             peripheral.discoverCharacteristics([kitchenScaleCharacteristicUUID], for: service)
