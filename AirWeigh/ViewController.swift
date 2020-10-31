@@ -56,7 +56,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if let data = characteristic.value {
-            let weight: Int = data.withUnsafeBytes{ $0.pointee } >> 8 & 0xFFFFFF
+            let weight = data.withUnsafeBytes { $0.load(as: Int.self) } >> 8 & 0xFFFFFF
             weighLabel.text = String(weight) + " g"
         }
     }
